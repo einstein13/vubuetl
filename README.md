@@ -31,10 +31,13 @@ Install all required python3 packages
 
     pip install -r requirements.txt
 
-Then it is a time for setting up a postgresql database.  
-After proper installation, migrate the data
+After proper installation, migrate database structure
 
     py manage.py migrate
+
+Also it is useful to create first user with all rights
+
+    py manage.py createsuperuser
 
 Then your project is ready to run:
 
