@@ -34,11 +34,11 @@ Install all required python3 packages
 Then it is a time for setting up a postgresql database.  
 After proper installation, migrate the data
 
-    py manage.py migrate
+    python manage.py migrate
 
 Then your project is ready to run:
 
-    py manage.py runserver
+    python manage.py runserver
 
 You can open your browser and open `127.0.0.1:8000` address. The project will work there.
 
@@ -54,14 +54,14 @@ Activate python enviroment
 
 And runs server
 
-    py manage.py runserver
+    python manage.py runserver
 
 # How to close/reset the server running?
 
 Most of the cases when you change the code, the server will restart automaticly.
 But if you have to force-reset, use `Ctrl+C` combination to kill it and
 
-    py manage.py runserver
+    python manage.py runserver
 
 To close the server (fully), use `Ctrl+C` and `deactivate` command.
 
@@ -69,11 +69,11 @@ To close the server (fully), use `Ctrl+C` and `deactivate` command.
 
 All possible django commands are listed after typing
 
-    py manage.py
+    python manage.py
 
 The most useful command is opening python shell under this enviroment with all possible models:
 
-    py manage.py shell
+    python manage.py shell
 
 To run any user script (from file) under this shell, you can type just
 
