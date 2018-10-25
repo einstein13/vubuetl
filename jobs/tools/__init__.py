@@ -1,1 +1,1 @@
-from .connector import Connector, Extractor
+from .connector import Connector
