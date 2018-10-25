@@ -10,9 +10,27 @@ This project was made by:
 
 # How to install?
 
+## Requirements for Linux (Ubuntu) enviroment
+
+Python3 applications
+
+    sudo apt install python3 python3-venv
+
+Git
+
+    sudo apt install git
+
+Postgresql (if needed):
+
+    sudo apt install postgresql
+    pgadmin III (use app store)
+
+## Creating project enviroment
+
 First, create folder for the project
 
     mkdir vubuetl
+    cd vubuetl
 
 Then, prepare python 3.x virtual enviroment
 
@@ -22,9 +40,11 @@ Activate the enviroment
 
     source virt/bin/activate
 
-Deactivating under `deactivate` command  
-Then to project directory
+Deactivating under `deactivate` command
+Then clone the project:
 
+    git clone git@github.com:einstein13/vubuetl.git (for ssh connection, recommended)
+    git clone https://github.com/einstein13/vubuetl.git (for https connection)
     cd vubuetl
 
 Install all required python3 packages
@@ -78,4 +98,3 @@ The most useful command is opening python shell under this enviroment with all p
 To run any user script (from file) under this shell, you can type just
 
     import SCRIPT_NAME.py
-
