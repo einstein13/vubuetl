@@ -1,3 +1,5 @@
+from re import compile as re_compile
+
 from bs4 import BeautifulSoup
 
 class CommonData(object):
@@ -27,7 +29,7 @@ class CommonData(object):
         if not tag['href']:
             return False
         href = tag['href']
-        regex = compile(regex_string)
+        regex = re_compile(regex_string)
         if regex.match(href):
             return True
         return False
