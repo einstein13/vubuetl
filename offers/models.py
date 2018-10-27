@@ -32,6 +32,10 @@ class Product(models.Model):
             decimal_places=2, null=True, blank=True)
     available_sizes = models.CharField(max_length=63)
 
+    def __str__(self):
+        result = "%s (%s)" % (self.title, self.category.short_name)
+        return result
+
 
 class Photo(models.Model):
 
