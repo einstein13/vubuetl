@@ -5,8 +5,8 @@ The data contains all the offers you can find there.
 
 This project was made by:  
 * Jakub Rak
-* Marcin 
-* Maciej
+* Marcin Stanuch
+* Maciej Małochleb
 
 # How to install?
 
