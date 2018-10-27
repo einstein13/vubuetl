@@ -2,7 +2,6 @@
 
 from django.db import models
 
-# Create your models here.
 
 class Category(models.Model):
 
@@ -10,6 +9,9 @@ class Category(models.Model):
     short_name = models.CharField(max_length=15)
     full_name = models.CharField(max_length=63)
     url = models.URLField()
+
+    def __str__(self):
+        return self.full_name
 
 
 class Product(models.Model):
@@ -33,8 +35,7 @@ class Product(models.Model):
     available_sizes = models.CharField(max_length=63)
 
     def __str__(self):
-        result = "%s (%s)" % (self.title, self.category.short_name)
-        return result
+        return "%s (%s)" % (self.title, self.category.short_name)
 
 
 class Photo(models.Model):
@@ -43,12 +44,18 @@ class Photo(models.Model):
             on_delete=models.CASCADE, related_name="photos")
     url = models.URLField()
 
+    def __str__(self):
+        return "%s (%d)" % (self.product.title, self.pk)
+
 
 class ClotheSize(models.Model):
 
     name = models.CharField(max_length=7)
     product = models.ForeignKey(Product,
             on_delete=models.CASCADE, related_name="sizes")
+
+    def __str__(self):
+        return "%s (%s)" % (self.product.title, self.name)
 
 
 class ClotheSizeDetail(models.Model):
@@ -57,4 +64,7 @@ class ClotheSizeDetail(models.Model):
             on_delete=models.CASCADE, related_name="details")
     title = models.CharField(max_length=31)
     value = models.IntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return "%s: %s" % (self.title, self.value)
 
