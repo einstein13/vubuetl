@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'jobs'
+    'jobs',
+    'offers'
 ]
 
 MIDDLEWARE = [
@@ -123,4 +124,5 @@ STATIC_URL = '/static/'
 try:
     from vubuetl.settings_local import *
 except Exception as e:
-    print(e)
+    # print(e)
+    pass
