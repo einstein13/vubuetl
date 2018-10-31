@@ -96,3 +96,4 @@ class Job(models.Model):
     # data
     url = models.URLField()
     html_data = models.TextField(blank=True, null=True)
+    transformed_data = models.TextField(blank=True, null=True)
