@@ -92,8 +92,20 @@ class Job(models.Model):
     # job processing
     status = models.IntegerField(choices=STATUSES)
     session = models.ForeignKey(Session, on_delete=models.CASCADE, related_name="jobs")
+    connection_errors = models.IntegerField(default=0)
 
     # data
     url = models.URLField()
     html_data = models.TextField(blank=True, null=True)
     transformed_data = models.TextField(blank=True, null=True)
+
+
+class ConnectorError(models.Model):
+
+    url = models.URLField()
+    code = models.IntegerField()
+    message = models.CharField(max_length=63)
+    connection_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "[%s] %s: %s" % (self.connection_time, self.code, self.message)

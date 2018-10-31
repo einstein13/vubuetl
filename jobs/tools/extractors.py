@@ -21,7 +21,9 @@ class HomepageExtractor(Connector):
 
     def find_all_categories_list(self):
         connection_result = self.make_connection(self.patterns['homepage'])
-        soup = self.soup_result(connection_result)
+        if not connection_result[0]:
+            return []
+        soup = self.soup_result(connection_result[1])
         found_tags = soup.find_all(self.category_hyperlink_filter)
         tags_list = []
         tags_ids = []
