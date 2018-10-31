@@ -20,7 +20,7 @@ class CommonData(object):
     def soup_result(self, result):
         return BeautifulSoup(result, features="html.parser")
 
-    # soup finder
+    # soup finders
     def hyperlink_filter(self, tag, regex_string):
         if tag.name != 'a':
             return False
