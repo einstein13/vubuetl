@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_celery_results',
     'jobs',
     'offers'
 ]
@@ -120,6 +121,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# celery configuration
+CELERY_RESULT_BACKEND = 'django-db'
 
 try:
     from vubuetl.settings_local import *
