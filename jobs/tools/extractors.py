@@ -47,9 +47,15 @@ class HomepageExtractor(Connector):
 
     def save_category_object(self, data):
         vubu_id = data[2]
-        category_object = Category.objects.get_or_create(vubu_id=vubu_id)
-        # here is the code about inserting arguments
+        # getting proper Category object
+        category_object = Category.objects.filter(vubu_id=vubu_id)
+        if category_object.count() > 0:
+            category_object = category_object[0]
+        else:
+            category_object = Category()
+            category_object.vubu_id = vubu_id
 
+        # here is the code about inserting arguments
         # [URL, full_name_category, category_id, parent_categories_count]
         # ['https://vubu.pl/pol_m_DLA-NIEJ_Odziez-damska-604.html', 'DLA-NIEJ_Odziez-damska', 604, 2]
         # so:
@@ -59,6 +65,9 @@ class HomepageExtractor(Connector):
             # data[3] - parent_categories_count (1 - top parent)
         # example:
         # category_object.vubu_id = data[2]
+        category_object.short_name = " "
+        category_object.full_name = " "
+        category_object.url = "http://www.google.pl"
 
         category_object.save()
         return
