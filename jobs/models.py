@@ -48,8 +48,9 @@ class Session(models.Model):
     
     # basic settings
     category_url = models.URLField()
-    objects_limit = models.IntegerField() # for <= 0 - no limit
+    objects_limit = models.IntegerField(default=0) # for <= 0 - no limit
     pagination_limit = models.IntegerField(blank=True, null=True)
+    automatic_etl = models.BooleanField(default=True)
 
     # common data
     jobs_count = models.IntegerField(blank=True, null=True)

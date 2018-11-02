@@ -81,6 +81,9 @@ class HomepageExtractor(Connector):
 
 class CategoryPageExtractor(Connector):
 
+    def category_hyperlink_filter(self, tag):
+        return self.hyperlink_filter(tag, self.regex['category_pagination'])
+
     def extract_pagination(self, tag, category_id=None):
         # result: pagination
         href = tag['href']
@@ -89,4 +92,6 @@ class CategoryPageExtractor(Connector):
         if category_id and int(match.group(2)) != category_id:
             return 0
         return int(match.group(3))
-        
+
+    def find_max_pagination(self, limit=None):
+        pass
