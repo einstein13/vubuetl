@@ -1,7 +1,7 @@
 from re import compile as re_compile
 
 from offers.models import Category
-
+from jobs.models import Job
 from jobs.tools.connector import Connector
 
 class HomepageExtractor(Connector):
@@ -81,8 +81,11 @@ class HomepageExtractor(Connector):
 
 class CategoryPageExtractor(Connector):
 
-    def category_hyperlink_filter(self, tag):
+    def category_pagination_hyperlink_filter(self, tag):
         return self.hyperlink_filter(tag, self.regex['category_pagination'])
+
+    def product_hyperlink_filter(self, tag):
+        return self.hyperlink_filter(tag, self.regex['product'])
 
     def extract_pagination(self, tag, category_id=None):
         # result: pagination
@@ -93,5 +96,65 @@ class CategoryPageExtractor(Connector):
             return 0
         return int(match.group(3))
 
-    def find_max_pagination(self, limit=None):
-        pass
+    def extract_product_url(self, tag):
+        href = tag['href']
+        regex = re_compile(self.regex['product'])
+        match = regex.match(href)
+        product_id = int(match.group(1))
+        product_title = match.group(2)
+        return self.patterns['product'] % (product_id, product_title)
+
+    def find_max_pagination(self, session_object):
+        category_url = session_object.category_url
+        connection_result = self.make_connection(category_url)
+        if not connection_result[0]:
+            return 0
+        soup = self.soup_result(connection_result[1])
+        found_tags = soup.find_all(self.category_pagination_hyperlink_filter)
+        highest_pagination = 0
+        for tag in found_tags:
+            new_pagination = self.extract_pagination(tag)
+            if new_pagination > highest_pagination:
+                highest_pagination = new_pagination
+        return highest_pagination
+
+    def create_unique_job(self, session_object, url_tag):
+        job_url = self.extract_product_url(url_tag)
+        if Job.objects.filter(url=job_url, session=session_object).count() > 0:
+            return 0
+        job = Job()
+        job.url = job_url
+        job.session = session_object
+        job.status = Job.STATUS_INITIATED
+        job.save()
+        return 1
+
+    def extract_product_url_tags(self, session_object, pagination=0):
+        url = session_object.category_url
+        if pagination > 0:
+            url = self.patterns['url_pagination'] % (url, pagination)
+        connection_result = self.force_connection(url)
+        soup = self.soup_result(connection_result[0])
+        found_tags = soup.find_all(self.product_hyperlink_filter)
+        return found_tags
+
+    def create_jobs(self, session_object):
+        max_pagination = self.find_max_pagination(session_object)
+        max_pagination += 1
+
+        jobs_count = 0
+        jobs_limit = session_object.objects_limit
+        no_limit = (jobs_limit <= 0)
+        pagination = 0
+
+        while (pagination < max_pagination) and (no_limit or jobs_count < jobs_limit):
+            found_tags = self.extract_product_url_tags(session_object, pagination)
+            itr = 0
+            itr_max = len(found_tags)
+            while (itr < itr_max) and (no_limit or jobs_count < jobs_limit):
+                tag = found_tags[itr]
+                jobs_count += self.create_unique_job(session_object, tag)
+                itr += 1
+            pagination += 1
+
+        return jobs_count

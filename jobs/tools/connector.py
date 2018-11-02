@@ -1,5 +1,6 @@
 from urllib.request import urlopen
 from re import compile
+from time import sleep
 
 from jobs.tools.commons import CommonData
 from jobs.models import ConnectorError
@@ -37,8 +38,13 @@ class Connector(CommonData):
             return [False, ""]
         return [True, string]
 
-    def pagination_hyperlink_filter(self, tag):
-        return self.hyperlink_filter(tag, self.regex['category_pagination'])
-
-    def product_hyperlink_filter(self, tag):
-        return self.hyperlink_filter(tag, self.regex['product'])
+    def force_connection(self, url, delta_time=30):
+        errors_count = 0
+        result = [False, ""]
+        while not result[0]:
+            result = self.make_connection(url)
+            if not result[0]:
+                print(url)
+                errors_count += 1
+                sleep(delta_time)
+        return [result[1], errors_count]

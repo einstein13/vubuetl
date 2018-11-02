@@ -14,6 +14,7 @@ class CommonData(object):
         "homepage": "https://vubu.pl/",
         "category": "https://vubu.pl/pol_m_%s-%d.html",
         "category_pagination": "https://vubu.pl/pol_m_%s-%d.html?counter=%d",
+        "url_pagination": "%s?counter=%d",
         "product": "https://vubu.pl/product-pol-%d-%s.html"
     }
 
