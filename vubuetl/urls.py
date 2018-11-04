@@ -16,6 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from jobs.views.pages import Home, StaticData, ETL
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('etl/', ETL.as_view(), name='etl'),
+    path('static-data/', StaticData.as_view(), name='static-data'),
+    path('', Home.as_view(), name='home')
 ]

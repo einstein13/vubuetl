@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href="{% url 'static-data' %}">Załaduj dane statyczne</a><br>
+    <a href="{% url 'etl' %}">Proces ETL</a><br>
+{% endblock %}
