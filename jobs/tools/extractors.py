@@ -76,7 +76,7 @@ class HomepageExtractor(Connector):
         categories_list = self.find_all_categories_list()
         for category_data in categories_list:
             self.save_category_object(category_data)
-        return
+        return len(categories_list)
 
 
 class CategoryPageExtractor(Connector):

@@ -7,5 +7,5 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         he = HomepageExtractor()
-        array = he.find_and_create_categories()
+        he.find_and_create_categories()
         return
