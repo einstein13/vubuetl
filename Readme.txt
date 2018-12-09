@@ -1,0 +1,1 @@
+Aby uruchomiæ program, nale¿y w folderze Release znaleŸæ plik VubuEtlProject.exe i go uruchomiæ.
